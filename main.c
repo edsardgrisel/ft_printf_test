@@ -7,6 +7,9 @@ int	main()
 	test_char();
 	test_string();
 	test_num_hex();
+	printf("Uppercase is:%X and lowercase is:%x", 812893, -1284);
+
+
 	return (0);
 	// int exp = printf("%x", 123);
 	// int res = ft_printf("%x", 123);

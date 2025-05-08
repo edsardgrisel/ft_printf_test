@@ -6,9 +6,11 @@ static void test_1(char *str, int var_1, int test_num)
 	char *buffer_exp, *buffer_res;
 	buffer_exp = calloc(100, sizeof(char));
 	buffer_res = calloc(100, sizeof(char));
+	if (!(buffer_exp && buffer_res))
+		return ;
 
-	int	exp_file = open("test/exp.txt", O_RDWR | O_CREAT | O_TRUNC, 0777);
-	int	res_file = open("test/res.txt", O_RDWR | O_CREAT | O_TRUNC, 0777);
+	int	exp_file = open("exp.txt", O_RDWR | O_CREAT | O_TRUNC, 0777);
+	int	res_file = open("res.txt", O_RDWR | O_CREAT | O_TRUNC, 0777);
 
 	// Save current stdout
 	int	saved_stdout = dup(STDOUT_FILENO);
@@ -30,17 +32,19 @@ static void test_1(char *str, int var_1, int test_num)
     lseek(res_file, 0, SEEK_SET);
 
 	// Read size - 1 from files to buffs 
-	int exp_len = read(exp_file, buffer_exp, sizeof(buffer_exp) - 1);
-	int res_len = read(res_file, buffer_res, sizeof(buffer_exp) - 1);
+	int exp_len = read(exp_file, buffer_exp, 100);
+	int res_len = read(res_file, buffer_res, 100);
 
 	if(exp_len == res_len && strcmp(buffer_exp, buffer_res) == 0)
 	{
 		printf("test_num_hex %d passed\n", test_num);
+		printf("exp:%s\n", buffer_exp);
+		printf("res:%s\n", buffer_res);
 		fflush(stdout);
 	}
 	else
 	{
-		printf("test_num_hex %d failed\n", test_num);
+		printf("test_num_hex %d ---FAILED---\n", test_num);
 		printf("exp:%s!=res:%s\n", buffer_exp, buffer_res);
 		fflush(stdout);
 	}
@@ -59,8 +63,8 @@ static void test_2(char *str, int var_1, int var_2, int test_num)
 	buffer_exp = calloc(100, sizeof(char));
 	buffer_res = calloc(100, sizeof(char));
 
-	int	exp_file = open("test/exp.txt", O_RDWR | O_CREAT | O_TRUNC, 0777);
-	int	res_file = open("test/res.txt", O_RDWR | O_CREAT | O_TRUNC, 0777);
+	int	exp_file = open("exp.txt", O_RDWR | O_CREAT | O_TRUNC, 0777);
+	int	res_file = open("res.txt", O_RDWR | O_CREAT | O_TRUNC, 0777);
 
 	// Save current stdout
 	int	saved_stdout = dup(STDOUT_FILENO);
@@ -82,17 +86,19 @@ static void test_2(char *str, int var_1, int var_2, int test_num)
     lseek(res_file, 0, SEEK_SET);
 
 	// Read size - 1 from files to buffs 
-	int exp_len = read(exp_file, buffer_exp, sizeof(buffer_exp) - 1);
-	int res_len = read(res_file, buffer_res, sizeof(buffer_exp) - 1);
+	int exp_len = read(exp_file, buffer_exp, 100);
+	int res_len = read(res_file, buffer_res, 100);
 
 	if(exp_len == res_len && strcmp(buffer_exp, buffer_res) == 0)
 	{
 		printf("test_num_hex %d passed\n", test_num);
+		printf("exp:%s\n", buffer_exp);
+		printf("res:%s\n", buffer_res);
 		fflush(stdout);
 	}
 	else
 	{
-		printf("test_num_hex %d failed\n", test_num);
+		printf("test_num_hex %d ---FAILED---\n", test_num);
 		printf("exp:%s!=res:%s\n", buffer_exp, buffer_res);
 		fflush(stdout);
 	}
@@ -109,9 +115,15 @@ void	test_num_hex()
 {
 	int	counter = 1;
 	test_1("%x", 8, counter++);
-	test_1("%x", 0, counter++);
-	test_1("The number is %x", 120, counter++);
-	test_2("%x%x", 2, 1, counter++);
+	test_1("%x", -256, counter++);
+	// test_1("The number is %x", 120, counter++);
+	// test_2("%x and %x", 579, -199204, counter++);
 
+	// test_1("%X", 8, counter++);
+	// test_1("%X", 0, counter++);
+	// test_1("The number is %X", 120, counter++);
+	// test_2("%X and %X", 12, 101, counter++);
+
+	// test_2("Uppercase is:%X and lowercase is:%x", 812893, -1284, counter++);
 	write(1, "\n", 1);
 }

@@ -6,7 +6,7 @@
 /*   By: edsardgrisel <edsardgrisel@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 12:17:33 by edsardgrise       #+#    #+#             */
-/*   Updated: 2025/05/08 13:56:07 by edsardgrise      ###   ########.fr       */
+/*   Updated: 2025/05/08 17:15:45 by edsardgrise      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,8 @@ static void test_0(char *str, int test_num)
 	buffer_exp = calloc(100, sizeof(char));
 	buffer_res = calloc(100, sizeof(char));
 
-	int	exp_file = open("test/exp.txt", O_RDWR | O_CREAT | O_TRUNC, 0777);
-	int	res_file = open("test/res.txt", O_RDWR | O_CREAT | O_TRUNC, 0777);
+	int	exp_file = open("exp.txt", O_RDWR | O_CREAT | O_TRUNC, 0777);
+	int	res_file = open("res.txt", O_RDWR | O_CREAT | O_TRUNC, 0777);
 
 	// Save current stdout
 	int	saved_stdout = dup(STDOUT_FILENO);
@@ -43,17 +43,19 @@ static void test_0(char *str, int test_num)
     lseek(res_file, 0, SEEK_SET);
 
 	// Read size - 1 from files to buffs 
-	int exp_len = read(exp_file, buffer_exp, sizeof(buffer_exp) - 1);
-	int res_len = read(res_file, buffer_res, sizeof(buffer_exp) - 1);
+	int exp_len = read(exp_file, buffer_exp, 100);
+	int res_len = read(res_file, buffer_res, 100);
 
 	if(exp_len == res_len && strcmp(buffer_exp, buffer_res) == 0)
 	{
 		printf("test_no_conversion %d passed\n", test_num);
+		printf("exp:%s\n", buffer_exp);
+		printf("res:%s\n", buffer_res);
 		fflush(stdout);
 	}
 	else
 	{
-		printf("test_no_conversion %d failed\n", test_num);
+		printf("test_no_conversion %d ---FAILED---\n", test_num);
 		printf("exp:%s!=res:%s", buffer_exp, buffer_res);
 		fflush(stdout);
 	}

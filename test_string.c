@@ -6,7 +6,7 @@
 /*   By: edsardgrisel <edsardgrisel@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 12:36:34 by edsardgrise       #+#    #+#             */
-/*   Updated: 2025/05/08 13:56:23 by edsardgrise      ###   ########.fr       */
+/*   Updated: 2025/05/08 17:15:57 by edsardgrise      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,8 @@ static void test_1(char *str, char *c_1, int test_num)
 	buffer_exp = calloc(100, sizeof(char));
 	buffer_res = calloc(100, sizeof(char));
 
-	int	exp_file = open("test/exp.txt", O_RDWR | O_CREAT | O_TRUNC, 0777);
-	int	res_file = open("test/res.txt", O_RDWR | O_CREAT | O_TRUNC, 0777);
+	int	exp_file = open("exp.txt", O_RDWR | O_CREAT | O_TRUNC, 0777);
+	int	res_file = open("res.txt", O_RDWR | O_CREAT | O_TRUNC, 0777);
 
 	// Save current stdout
 	int	saved_stdout = dup(STDOUT_FILENO);
@@ -42,17 +42,19 @@ static void test_1(char *str, char *c_1, int test_num)
     lseek(res_file, 0, SEEK_SET);
 
 	// Read size - 1 from files to buffs 
-	int exp_len = read(exp_file, buffer_exp, sizeof(buffer_exp) - 1);
-	int res_len = read(res_file, buffer_res, sizeof(buffer_exp) - 1);
+	int exp_len = read(exp_file, buffer_exp, 100);
+	int res_len = read(res_file, buffer_res, 100);
 
 	if(exp_len == res_len && strcmp(buffer_exp, buffer_res) == 0)
 	{
 		printf("test_string %d passed\n", test_num);
+		printf("exp:%s\n", buffer_exp);
+		printf("res:%s\n", buffer_exp);
 		fflush(stdout);
 	}
 	else
 	{
-		printf("test_string %d failed\n", test_num);
+		printf("test_string %d ---FAILED---\n", test_num);
 		printf("exp:%s!=res:%s", buffer_exp, buffer_res);
 		fflush(stdout);
 	}
@@ -71,8 +73,8 @@ static void test_2(char *str, char *var_1, char *var_2, int test_num)
 	buffer_exp = calloc(100, sizeof(char));
 	buffer_res = calloc(100, sizeof(char));
 
-	int	exp_file = open("test/exp.txt", O_RDWR | O_CREAT | O_TRUNC, 0777);
-	int	res_file = open("test/res.txt", O_RDWR | O_CREAT | O_TRUNC, 0777);
+	int	exp_file = open("exp.txt", O_RDWR | O_CREAT | O_TRUNC, 0777);
+	int	res_file = open("res.txt", O_RDWR | O_CREAT | O_TRUNC, 0777);
 
 	// Save current stdout
 	int	saved_stdout = dup(STDOUT_FILENO);
@@ -94,17 +96,19 @@ static void test_2(char *str, char *var_1, char *var_2, int test_num)
     lseek(res_file, 0, SEEK_SET);
 
 	// Read size - 1 from files to buffs 
-	int exp_len = read(exp_file, buffer_exp, sizeof(buffer_exp) - 1);
-	int res_len = read(res_file, buffer_res, sizeof(buffer_exp) - 1);
+	int exp_len = read(exp_file, buffer_exp, 100);
+	int res_len = read(res_file, buffer_res, 100);
 
 	if(exp_len == res_len && strcmp(buffer_exp, buffer_res) == 0)
 	{
 		printf("test_string %d passed\n", test_num);
+		printf("exp:%s\n", buffer_exp);
+		printf("res:%s\n", buffer_exp);
 		fflush(stdout);
 	}
 	else
 	{
-		printf("test_string %d failed\n", test_num);
+		printf("test_string %d ---FAILED---\n", test_num);
 		printf("exp:%s!=res:%s", buffer_exp, buffer_res);
 		fflush(stdout);
 	}
