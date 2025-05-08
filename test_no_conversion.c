@@ -6,7 +6,7 @@
 /*   By: edsardgrisel <edsardgrisel@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 12:17:33 by edsardgrise       #+#    #+#             */
-/*   Updated: 2025/05/08 17:15:45 by edsardgrise      ###   ########.fr       */
+/*   Updated: 2025/05/08 18:00:08 by edsardgrise      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ static void test_0(char *str, int test_num)
 
 	// Redirect from stdout to exp.txt
 	dup2(exp_file, STDOUT_FILENO);
-	printf(str);
+	printf("%s", str);
 	fflush(stdout);
 
 	// Redicect from exp.txt to res.txt

@@ -3,11 +3,12 @@
 
 int	main()
 {
-	test_no_conversion();
-	test_char();
-	test_string();
-	test_num_hex();
-	printf("Uppercase is:%X and lowercase is:%x", 812893, -1284);
+	// test_no_conversion();
+	// test_char();
+	// test_string();
+	// test_num_hex();
+	// mixed_cases();
+	test_int();
 
 
 	return (0);

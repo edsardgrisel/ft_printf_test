@@ -1,24 +1,11 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   test_char.c                                        :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: edsardgrisel <edsardgrisel@student.42.f    +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/08 09:53:16 by edsardgrise       #+#    #+#             */
-/*   Updated: 2025/05/08 17:59:40 by edsardgrise      ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "test.h"
 
-
-// Test with 1 char
-static void test_1(char *str, char var_1, int test_num)
+// Test with 1 int
+static void test_1(char *str, int var_1, int test_num)
 {
 	char *buffer_exp, *buffer_res;
-	buffer_exp = calloc(100, sizeof(char));
-	buffer_res = calloc(100, sizeof(char));
+	buffer_exp = calloc(1000, sizeof(char));
+	buffer_res = calloc(1000, sizeof(char));
 
 	int	exp_file = open("exp.txt", O_RDWR | O_CREAT | O_TRUNC, 0777);
 	int	res_file = open("res.txt", O_RDWR | O_CREAT | O_TRUNC, 0777);
@@ -43,19 +30,19 @@ static void test_1(char *str, char var_1, int test_num)
     lseek(res_file, 0, SEEK_SET);
 
 	// Read size - 1 from files to buffs 
-	int exp_len = read(exp_file, buffer_exp, 100);
-	int res_len = read(res_file, buffer_res, 100);
+	int exp_len = read(exp_file, buffer_exp, 1000);
+	int res_len = read(res_file, buffer_res, 1000);
 
 	if(exp_len == res_len && strcmp(buffer_exp, buffer_res) == 0)
 	{
-		printf("test_char %d passed\n", test_num);
+		printf("test_int %d passed\n", test_num);
 		printf("exp:%s\n", buffer_exp);
 		printf("res:%s\n", buffer_res);
 		fflush(stdout);
 	}
 	else
 	{
-		printf("test_char %d ---FAILED---\n", test_num);
+		printf("test_int %d ---FAILED---\n", test_num);
 		printf("exp:%s!=res:%s\n", buffer_exp, buffer_res);
 		fflush(stdout);
 	}
@@ -67,12 +54,12 @@ static void test_1(char *str, char var_1, int test_num)
 	free(buffer_res);
 }
 
-// Test with 2 chars
-static void test_2(char *str, char var_1, char var_2, int test_num)
+// Test with 2 ints
+static void test_2(char *str, int var_1, int var_2, int test_num)
 {
 	char *buffer_exp, *buffer_res;
-	buffer_exp = calloc(100, sizeof(char));
-	buffer_res = calloc(100, sizeof(char));
+	buffer_exp = calloc(1000, sizeof(char));
+	buffer_res = calloc(1000, sizeof(char));
 
 	int	exp_file = open("exp.txt", O_RDWR | O_CREAT | O_TRUNC, 0777);
 	int	res_file = open("res.txt", O_RDWR | O_CREAT | O_TRUNC, 0777);
@@ -97,19 +84,19 @@ static void test_2(char *str, char var_1, char var_2, int test_num)
     lseek(res_file, 0, SEEK_SET);
 
 	// Read size - 1 from files to buffs 
-	int exp_len = read(exp_file, buffer_exp, 100);
-	int res_len = read(res_file, buffer_res, 100);
+	int exp_len = read(exp_file, buffer_exp, 1000);
+	int res_len = read(res_file, buffer_res, 1000);
 
 	if(exp_len == res_len && strcmp(buffer_exp, buffer_res) == 0)
 	{
-		printf("test_char %d passed\n", test_num);
+		printf("test_int %d passed\n", test_num);
 		printf("exp:%s\n", buffer_exp);
 		printf("res:%s\n", buffer_res);
 		fflush(stdout);
 	}
 	else
 	{
-		printf("test_char %d ---FAILED---\n", test_num);
+		printf("test_int %d ---FAILED---\n", test_num);
 		printf("exp:%s!=res:%s\n", buffer_exp, buffer_res);
 		fflush(stdout);
 	}
@@ -121,15 +108,14 @@ static void test_2(char *str, char var_1, char var_2, int test_num)
 	free(buffer_res);
 }
 
-void	test_char()
+void	test_int()
 {
 	int counter = 1;
-	test_1("%chello", 'b', counter++);
-	test_1("Hello %c world", 'b', counter++);
-	test_2("Hello %c world %c", 'b', '~', counter++);
-	test_2("%cHell%co world", '/', ' ', counter++);
+	test_1("%i", 1, counter++);
+	test_1("num = %i", -1, counter++);
+	test_1("num = %i", INT_MIN, counter++);
+	test_2("num1 = %i num2 = %i", INT_MAX, INT_MIN, counter++);
+	test_2("%iHell%io world", 0, 0, counter++);
 	write(1, "\n", 1);
-	write(1, "\n", 1);
-
 
 }

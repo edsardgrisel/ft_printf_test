@@ -116,14 +116,14 @@ void	test_num_hex()
 	int	counter = 1;
 	test_1("%x", 8, counter++);
 	test_1("%x", -256, counter++);
-	// test_1("The number is %x", 120, counter++);
-	// test_2("%x and %x", 579, -199204, counter++);
+	test_1("The number is %x", 120, counter++);
+	test_2("%x and %x", 579, -199204, counter++);
 
-	// test_1("%X", 8, counter++);
-	// test_1("%X", 0, counter++);
-	// test_1("The number is %X", 120, counter++);
-	// test_2("%X and %X", 12, 101, counter++);
+	test_1("%X", 8, counter++);
+	test_1("%X", 0, counter++);
+	test_1("The number is %X", 120, counter++);
+	test_2("%X and %X", 12, 101, counter++);
 
-	// test_2("Uppercase is:%X and lowercase is:%x", 812893, -1284, counter++);
+	test_2("Uppercase is:%X and lowercase is:%x", 812893, -1284, counter++);
 	write(1, "\n", 1);
 }
