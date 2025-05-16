@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   test_no_conversion.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: edsardgrisel <edsardgrisel@student.42.f    +#+  +:+       +#+        */
+/*   By: egrisel <egrisel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 12:17:33 by edsardgrise       #+#    #+#             */
-/*   Updated: 2025/05/08 18:00:08 by edsardgrise      ###   ########.fr       */
+/*   Updated: 2025/05/16 14:20:44 by egrisel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ static void test_0(char *str, int test_num)
     lseek(exp_file, 0, SEEK_SET);
     lseek(res_file, 0, SEEK_SET);
 
-	// Read size - 1 from files to buffs 
+	// Read size - 1 from files to buffs
 	int exp_len = read(exp_file, buffer_exp, 100);
 	int res_len = read(res_file, buffer_res, 100);
 
@@ -69,9 +69,11 @@ static void test_0(char *str, int test_num)
 
 void	test_no_conversion()
 {
+	write(1, "---no_conversion---\n", 20);
 	int	counter = 1;
 	test_0("", counter++);
 	test_0("world", counter++);
+	// test_0(NULL, counter++);
 	write(1, "\n", 1);
 
 }

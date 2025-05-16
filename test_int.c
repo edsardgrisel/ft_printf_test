@@ -29,7 +29,7 @@ static void test_1(char *str, int var_1, int test_num)
     lseek(exp_file, 0, SEEK_SET);
     lseek(res_file, 0, SEEK_SET);
 
-	// Read size - 1 from files to buffs 
+	// Read size - 1 from files to buffs
 	int exp_len = read(exp_file, buffer_exp, 1000);
 	int res_len = read(res_file, buffer_res, 1000);
 
@@ -83,7 +83,7 @@ static void test_2(char *str, int var_1, int var_2, int test_num)
     lseek(exp_file, 0, SEEK_SET);
     lseek(res_file, 0, SEEK_SET);
 
-	// Read size - 1 from files to buffs 
+	// Read size - 1 from files to buffs
 	int exp_len = read(exp_file, buffer_exp, 1000);
 	int res_len = read(res_file, buffer_res, 1000);
 
@@ -110,12 +110,28 @@ static void test_2(char *str, int var_1, int var_2, int test_num)
 
 void	test_int()
 {
+	write(1, "---int---\n", 10);
 	int counter = 1;
-	test_1("%i", 1, counter++);
-	test_1("num = %i", -1, counter++);
-	test_1("num = %i", INT_MIN, counter++);
-	test_2("num1 = %i num2 = %i", INT_MAX, INT_MIN, counter++);
-	test_2("%iHell%io world", 0, 0, counter++);
+	union argUnion arg1;
+	union argUnion arg2;
+
+
+	arg1.argddigit = 0;
+	test_1_param("%i", arg1, counter++);
+
+	arg1.argddigit = INT_MAX;
+	test_1_param("num = %i", arg1, counter++);
+
+	arg1.argddigit = INT_MIN;
+	test_1_param("num = %i", arg1, counter++);
+
+	arg1.argddigit = 0;
+	arg2.argddigit = 1;
+	test_2_params("num1 = %i num2 = %i", arg1, arg2, counter++);
+
+	arg1.argddigit = -215;
+	arg2.argddigit = 569;
+	test_2_params("%iHell%io world", arg1, arg2, counter++);
 	write(1, "\n", 1);
 
 }

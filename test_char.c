@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   test_char.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: edsardgrisel <edsardgrisel@student.42.f    +#+  +:+       +#+        */
+/*   By: egrisel <egrisel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 09:53:16 by edsardgrise       #+#    #+#             */
-/*   Updated: 2025/05/08 17:59:40 by edsardgrise      ###   ########.fr       */
+/*   Updated: 2025/05/16 14:18:46 by egrisel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ static void test_1(char *str, char var_1, int test_num)
     lseek(exp_file, 0, SEEK_SET);
     lseek(res_file, 0, SEEK_SET);
 
-	// Read size - 1 from files to buffs 
+	// Read size - 1 from files to buffs
 	int exp_len = read(exp_file, buffer_exp, 100);
 	int res_len = read(res_file, buffer_res, 100);
 
@@ -96,7 +96,7 @@ static void test_2(char *str, char var_1, char var_2, int test_num)
     lseek(exp_file, 0, SEEK_SET);
     lseek(res_file, 0, SEEK_SET);
 
-	// Read size - 1 from files to buffs 
+	// Read size - 1 from files to buffs
 	int exp_len = read(exp_file, buffer_exp, 100);
 	int res_len = read(res_file, buffer_res, 100);
 
@@ -123,13 +123,19 @@ static void test_2(char *str, char var_1, char var_2, int test_num)
 
 void	test_char()
 {
+	write(1, "---test_char---\n", 16);
 	int counter = 1;
-	test_1("%chello", 'b', counter++);
-	test_1("Hello %c world", 'b', counter++);
-	test_2("Hello %c world %c", 'b', '~', counter++);
-	test_2("%cHell%co world", '/', ' ', counter++);
-	write(1, "\n", 1);
-	write(1, "\n", 1);
+	union argUnion arg1;
+	union argUnion arg2;
 
+	arg1.argchar = 'h';
+	test_1_param("%cello", arg1, counter++);
 
+	arg1.argchar = 'h';
+	test_1_param("%c", arg1, counter++);
+
+	arg1.argchar = 'a';
+	arg2.argchar = 'b';
+	test_2_params("%c%cc", arg1, arg2, counter++);
+	write(1, "\n", 1);
 }

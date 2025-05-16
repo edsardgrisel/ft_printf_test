@@ -4,8 +4,24 @@
 #include <assert.h>
 #include <string.h>
 #include <stdlib.h>
-#include "../printf_repo/include/libftprintf.h"
+#include "../ft_printf/libftprintf.h"
 #include <limits.h>
+
+union argUnion
+{
+	char argchar;
+	char *argstring;
+	void *argpointer;
+	int argddigit;
+	int argidigit;
+	unsigned int argudigit;
+	unsigned int arglhex;
+	unsigned int arguhex;
+};
+
+
+void test_1_param(char *str, union argUnion var_1, int test_num);
+void test_2_params(char *str, union argUnion var_1, union argUnion var_2, int test_num);
 
 
 void	test_char();

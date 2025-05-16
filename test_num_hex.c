@@ -31,7 +31,7 @@ static void test_1(char *str, int var_1, int test_num)
     lseek(exp_file, 0, SEEK_SET);
     lseek(res_file, 0, SEEK_SET);
 
-	// Read size - 1 from files to buffs 
+	// Read size - 1 from files to buffs
 	int exp_len = read(exp_file, buffer_exp, 100);
 	int res_len = read(res_file, buffer_res, 100);
 
@@ -85,7 +85,7 @@ static void test_2(char *str, int var_1, int var_2, int test_num)
     lseek(exp_file, 0, SEEK_SET);
     lseek(res_file, 0, SEEK_SET);
 
-	// Read size - 1 from files to buffs 
+	// Read size - 1 from files to buffs
 	int exp_len = read(exp_file, buffer_exp, 100);
 	int res_len = read(res_file, buffer_res, 100);
 
@@ -113,17 +113,25 @@ static void test_2(char *str, int var_1, int var_2, int test_num)
 
 void	test_num_hex()
 {
+	write(1, "---num_hex---\n", 14);
 	int	counter = 1;
-	test_1("%x", 8, counter++);
-	test_1("%x", -256, counter++);
-	test_1("The number is %x", 120, counter++);
-	test_2("%x and %x", 579, -199204, counter++);
+	union argUnion arg1;
+	union argUnion arg2;
 
-	test_1("%X", 8, counter++);
-	test_1("%X", 0, counter++);
-	test_1("The number is %X", 120, counter++);
-	test_2("%X and %X", 12, 101, counter++);
+	arg1.argddigit = 0;
+	test_1_param("%x", arg1, counter++);
+	arg1.argddigit = INT_MIN;
+	test_1_param("%x", arg1, counter++);
+	arg1.argddigit = INT_MAX;
+	test_1_param("The number is %x", arg1, counter++);
 
-	test_2("Uppercase is:%X and lowercase is:%x", 812893, -1284, counter++);
+	arg1.argddigit = 21;
+	arg2.arglhex = INT_MAX;
+	test_2_params("%X and %X", arg1, arg1, counter++);
+
+	arg1.argddigit = INT_MAX;
+	arg2.arglhex = -5081;
+	test_2_params("%X and %X", arg1, arg1, counter++);
+
 	write(1, "\n", 1);
 }
