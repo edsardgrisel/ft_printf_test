@@ -6,7 +6,7 @@
 /*   By: egrisel <egrisel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 12:17:33 by edsardgrise       #+#    #+#             */
-/*   Updated: 2025/05/16 14:20:44 by egrisel          ###   ########.fr       */
+/*   Updated: 2025/05/16 16:45:03 by egrisel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,12 +28,12 @@ static void test_0(char *str, int test_num)
 
 	// Redirect from stdout to exp.txt
 	dup2(exp_file, STDOUT_FILENO);
-	printf("%s", str);
+	int exp_return = printf(str);
 	fflush(stdout);
 
 	// Redicect from exp.txt to res.txt
 	dup2(res_file, STDOUT_FILENO);
-	ft_printf(str);
+	int res_return = ft_printf(str);
 
 	// Restore old stdout
 	dup2(saved_stdout, STDOUT_FILENO);
@@ -46,7 +46,7 @@ static void test_0(char *str, int test_num)
 	int exp_len = read(exp_file, buffer_exp, 100);
 	int res_len = read(res_file, buffer_res, 100);
 
-	if(exp_len == res_len && strcmp(buffer_exp, buffer_res) == 0)
+	if(exp_len == res_len && strcmp(buffer_exp, buffer_res) == 0  && exp_return == res_return)
 	{
 		printf("test_no_conversion %d passed\n", test_num);
 		printf("exp:%s\n", buffer_exp);
@@ -55,7 +55,7 @@ static void test_0(char *str, int test_num)
 	}
 	else
 	{
-		printf("test_no_conversion %d ---FAILED---\n", test_num);
+		printf("%stest_no_conversion %d ---FAILED---\n%s", KRED, test_num, KNRM);
 		printf("exp:%s!=res:%s", buffer_exp, buffer_res);
 		fflush(stdout);
 	}
@@ -71,9 +71,9 @@ void	test_no_conversion()
 {
 	write(1, "---no_conversion---\n", 20);
 	int	counter = 1;
-	test_0("", counter++);
-	test_0("world", counter++);
-	// test_0(NULL, counter++);
+	// test_0("", counter++);
+	// test_0("world", counter++);
+	test_0(NULL, counter++);
 	write(1, "\n", 1);
 
 }

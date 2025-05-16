@@ -113,11 +113,23 @@
 
 void	test_pointer()
 {
-	// char *string;
-	// int	counter = 1;
-	// test_1("%x", &counter, counter++);
-	// test_1("string address is: %x", NULL, counter++);
-	// test_2("%x and %x", &string, &counter, counter++);
-	// test_2("%x and %x", 579, -199204, counter++);
-	// write(1, "\n", 1);
+	write(1, "---pointer---\n", 14);
+	char *string;
+	int	counter = 1;
+
+	union argUnion arg1;
+	union argUnion arg2;
+
+	arg1.argpointer = string;
+	test_1_param("%p", arg1, counter++);
+
+	arg1.argpointer = NULL;
+	test_1_param("string address is: %p", arg1, counter++);
+
+
+
+	arg1.argpointer = "HELLo";
+	arg2.argpointer = NULL;
+	test_2_params("%p and %p", arg1, arg2, counter++);
+	write(1, "\n", 1);
 }

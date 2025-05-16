@@ -14,12 +14,12 @@ void test_1_param(char *str, union argUnion var_1, int test_num)
 
 	// Redirect from stdout to exp.txt
 	dup2(exp_file, STDOUT_FILENO);
-	printf(str, var_1);
+	int exp_return = printf(str, var_1);
 	fflush(stdout);
 
 	// Redicect from exp.txt to res.txt
 	dup2(res_file, STDOUT_FILENO);
-	ft_printf(str, var_1);
+	int res_return = ft_printf(str, var_1);
 
 	// Restore old stdout
 	dup2(saved_stdout, STDOUT_FILENO);
@@ -32,17 +32,22 @@ void test_1_param(char *str, union argUnion var_1, int test_num)
 	int exp_len = read(exp_file, buffer_exp, 100);
 	int res_len = read(res_file, buffer_res, 100);
 
-	if(exp_len == res_len && strcmp(buffer_exp, buffer_res) == 0)
+	if(exp_len == res_len && strcmp(buffer_exp, buffer_res) == 0 && exp_return == res_return)
 	{
 		printf("test %d passed\n", test_num);
 		printf("exp:%s\n", buffer_exp);
 		printf("res:%s\n", buffer_res);
+		printf("exp return: %d\n", exp_return);
+		printf("res return: %d\n", res_return);
+
 		fflush(stdout);
 	}
 	else
 	{
-		printf("test %d ---FAILED---\n", test_num);
+		printf("%stest %d ---FAILED---\n%s", KRED, test_num, KNRM);
 		printf("exp:%s!=res:%s\n", buffer_exp, buffer_res);
+		printf("exp return: %d\n", exp_return);
+		printf("res return: %d\n", res_return);
 		fflush(stdout);
 	}
 
@@ -68,12 +73,12 @@ void test_2_params(char *str, union argUnion var_1, union argUnion var_2, int te
 
 	// Redirect from stdout to exp.txt
 	dup2(exp_file, STDOUT_FILENO);
-	printf(str, var_1, var_2);
+	int exp_return = printf(str, var_1, var_2);
 	fflush(stdout);
 
 	// Redicect from exp.txt to res.txt
 	dup2(res_file, STDOUT_FILENO);
-	ft_printf(str, var_1, var_2);
+	int res_return = ft_printf(str, var_1, var_2);
 
 	// Restore old stdout
 	dup2(saved_stdout, STDOUT_FILENO);
@@ -86,19 +91,27 @@ void test_2_params(char *str, union argUnion var_1, union argUnion var_2, int te
 	int exp_len = read(exp_file, buffer_exp, 100);
 	int res_len = read(res_file, buffer_res, 100);
 
-	if(exp_len == res_len && strcmp(buffer_exp, buffer_res) == 0)
+
+
+	if(exp_len == res_len && strcmp(buffer_exp, buffer_res) == 0 && exp_return == res_return)
 	{
 		printf("test %d passed\n", test_num);
 		printf("exp:%s\n", buffer_exp);
 		printf("res:%s\n", buffer_res);
+		printf("exp return: %d\n", exp_return);
+		printf("res return: %d\n", res_return);
+
 		fflush(stdout);
 	}
 	else
 	{
-		printf("test %d ---FAILED---\n", test_num);
+		printf("%stest %d ---FAILED---\n%s", KRED, test_num, KNRM);
 		printf("exp:%s!=res:%s\n", buffer_exp, buffer_res);
+		printf("exp return: %d\n", exp_return);
+		printf("res return: %d\n", res_return);
 		fflush(stdout);
 	}
+
 
 	close(exp_file);
 	close(res_file);
@@ -115,7 +128,7 @@ int	main()
 	test_num_hex();
 	mixed_cases();
 	test_int();
-
+	test_pointer();
 
 	return (0);
 }
